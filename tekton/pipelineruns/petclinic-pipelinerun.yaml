@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  generateName: petclinic-deploy-run-
+  generateName: petclinic-pipeline-deploy-
 spec:
   pipelineRef:
     name: petclinic-deploy

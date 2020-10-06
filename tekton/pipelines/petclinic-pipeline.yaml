@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: petclinic-pipeline-new
+  name: petclinic-pipeline
 spec:
   params:
     - default: spring-petclinic
@@ -9,7 +9,7 @@ spec:
       name: APP_NAME
       type: string
     - default: >-
-        https://gitea-gitea.apps.cluster-wkrhtr.red.osp.opentlc.com/gitea/spring-petclinic.git
+        https://github.com/spring-projects/spring-petclinic.git
       description: The application git repository url
       name: APP_GIT_URL
       type: string
@@ -50,11 +50,13 @@ spec:
       runAfter:
         - git-clone
       taskRef:
-        kind: Task
+        kind: ClusterTask
         name: maven
       workspaces:
         - name: source
           workspace: app-source
+        - name: maven-settings
+          workspace: maven-settings
     - name: build-image
       params:
         - name: TLSVERIFY
@@ -114,4 +116,4 @@ spec:
         name: deploy-to-project
   workspaces:
     - name: app-source
-
+    - name: maven-settings
